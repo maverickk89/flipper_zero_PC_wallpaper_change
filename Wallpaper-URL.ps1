@@ -43,19 +43,19 @@ Else {
  
 }
  
-Add-Type -TypeDefinition @" 
-using System; 
-using System.Runtime.InteropServices;
-  
-public class Params
-{ 
-    [DllImport("User32.dll",CharSet=CharSet.Unicode)] 
-    public static extern int SystemParametersInfo (Int32 uAction, 
-                                                   Int32 uParam, 
-                                                   String lpvParam, 
-                                                   Int32 fuWinIni);
-}
-"@ 
+#Add-Type -TypeDefinition @" 
+#using System; 
+#using System.Runtime.InteropServices;
+#
+#public class Params
+#{ 
+#    [DllImport("User32.dll",CharSet=CharSet.Unicode)] 
+#    public static extern int SystemParametersInfo (Int32 uAction, 
+#                                                   Int32 uParam, 
+#                                                   String lpvParam, 
+#                                                   Int32 fuWinIni);
+#}
+#"@ 
   
     $SPI_SETDESKWALLPAPER = 0x0014
     $UpdateIniFile = 0x01
@@ -66,21 +66,21 @@ public class Params
     $ret = [Params]::SystemParametersInfo($SPI_SETDESKWALLPAPER, 0, $Image, $fWinIni)
 }
 
-function Target-Comes {
-Add-Type -AssemblyName System.Windows.Forms
-$originalPOS = [System.Windows.Forms.Cursor]::Position.X
-$o=New-Object -ComObject WScript.Shell
-
-    while (1) {
-        $pauseTime = 3
-        if ([Windows.Forms.Cursor]::Position.X -ne $originalPOS){
-            break
-        }
-        else {
-            $o.SendKeys("{CAPSLOCK}");Start-Sleep -Seconds $pauseTime
-        }
-    }
-}
+#function Target-Comes {
+#Add-Type -AssemblyName System.Windows.Forms
+#$originalPOS = [System.Windows.Forms.Cursor]::Position.X
+#$o=New-Object -ComObject WScript.Shell
+#
+#    while (1) {
+#        $pauseTime = 3
+#        if ([Windows.Forms.Cursor]::Position.X -ne $originalPOS){
+#            break
+#        }
+#        else {
+#            $o.SendKeys("{CAPSLOCK}");Start-Sleep -Seconds $pauseTime
+#        }
+#    }
+#}
 
 function Clean-Exfil { 
 
